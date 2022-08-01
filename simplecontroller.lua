@@ -11,15 +11,17 @@ setmetatable(Controllers.MonomialController, Controllers)
 Controllers.__index = Controllers
 
 function Controllers:SetGoal(goal: number)
-
+    if self.Goal == goal then return end
+    self.PreviousTime = os.clock()
+    self.Goal = goal
 end
 
 function Controllers:SetCurrent(value: number)
- 
+     self.Current = value
 end
 
 function Controllers:Get()
-
+    return self.Current
 end
 
 function Controllers.MonomialController.new(degree: number, strength: number)
