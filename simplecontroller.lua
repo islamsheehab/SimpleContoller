@@ -27,4 +27,11 @@ function Controllers.MonomialController.new(degree: number, strength: number)
     return setmetatable(self, Controllers.MonomialController)
 end
 
+function Controllers.MonomialController:Update()
+    local deltaTime = os.clock() - self.PreviousTime
+    local error = self.Goal - self.Current
+    local increment = (error ^ self.Degree) * deltaTime
+    self.Current += increment
+end
+
 return Controllers
