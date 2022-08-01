@@ -10,6 +10,18 @@ setmetatable(Controllers.MonomialController, Controllers)
 
 Controllers.__index = Controllers
 
+function Controllers:SetGoal(goal: number)
+
+end
+
+function Controllers:SetCurrent(value: number)
+ 
+end
+
+function Controllers:Get()
+
+end
+
 function Controllers.MonomialController.new(degree: number, strength: number)
     degree = degree or 1
     strength = strength or 1
