@@ -12,7 +12,7 @@ Controllers.__index = Controllers
 
 function Controllers:SetGoal(goal: number)
     if self.Goal == goal then return end
-    self.PreviousTime = os.clock()
+--    self.PreviousTime = os.clock()
     self.Goal = goal
 end
 
@@ -50,11 +50,14 @@ function Controllers.QuadraticController.new(strength: number)
 end
 
 function Controllers.MonomialController:Update()
-    local deltaTime     = os.clock() - self.PreviousTime
-    local error         = self.Goal - self.Current
-    local increment     = (error ^ self.Degree) * deltaTime
-    
-    self.Current += increment
+    local deltaTime = os.clock() - self.PreviousTime
+    local error = self.Goal - self.Current
+    local increment = (math.abs(error) ^ self.Degree)  * math.sign(error)
+                        * deltaTime * self.Strength
+
+    -- Prevents overshooting
+    self.Current += math.clamp(increment, -math.abs(error), math.abs(error))
+    self.PreviousTime = os.clock()
 end
 
 return Controllers
